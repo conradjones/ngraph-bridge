@@ -103,6 +103,11 @@ def install_virtual_env(venv_dir):
 
     # Setup virtual environment
     venv_dir = os.path.abspath(venv_dir)
+    
+    # Force / separators on windows it seems counter-intuitive but required for 
+    # virtualenv to create correctly
+    venv_dir = venv_dir.replace('\\', '/')
+    
     # Note: We assume that we are using Python 3 (as this script is also being
     # executed under Python 3 as marked in line 1)
     command_executor(["virtualenv", "-p", "python3", venv_dir])
