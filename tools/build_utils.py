@@ -128,7 +128,6 @@ def load_venv(venv_dir):
     else:
         activate_this_file = venv_dir + "/bin/activate_this.py"
         
-    activate_this_file = venv_dir + "/bin/activate_this.py"
     # The execfile API is for Python 2. We keep here just in case you are on an
     # obscure system without Python 3
     # execfile(activate_this_file, dict(__file__=activate_this_file))
