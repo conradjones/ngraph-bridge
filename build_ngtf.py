@@ -187,12 +187,14 @@ def main():
         found_whl = False
         found_libtf_fw = False
         found_libtf_cc = False
+        libtf_cc_name = 'tensorflow_cc' if sys.platform.startswith('win32') else 'libtensorflow_cc'
+        libtf_fw_name = 'tensorflow_framework' if sys.platform.startswith('win32') else 'libtensorflow_framework'
         for i in os.listdir(loc):
             if '.whl' in i:
                 found_whl = True
-            if 'libtensorflow_cc' in i:
+            if libtf_cc_name in i:
                 found_libtf_cc = True
-            if 'libtensorflow_framework' in i:
+            if libtf_fw_name in i:
                 found_libtf_fw = True
         assert found_whl, "Did not find TF whl file"
         assert found_libtf_fw, "Did not find libtensorflow_framework"
