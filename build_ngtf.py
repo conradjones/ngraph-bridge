@@ -261,6 +261,8 @@ def main():
         # Make sure there is exactly 1 TF whl
         tf_whl = os.path.abspath(tf_whl_loc + '/' + possible_whl[0])
         assert os.path.isfile(tf_whl), "Did not find " + tf_whl
+        # Fix the path on windows
+        tf_whl = tf_whl.replace('\\', '/')
         # Install the found TF whl file
         command_executor(["pip", "install", "-U", tf_whl])
         cxx_abi = get_tf_cxxabi()
