@@ -120,7 +120,14 @@ def load_venv(venv_dir):
     # return (hasattr(sys, 'real_prefix')
     #         or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
     print("Loading virtual environment from: %s" % venv_dir)
-
+    
+    # Virtual env uses a different path on windows
+    if sys.platform.startswith('win32'):
+        activate_this_file = venv_dir + "/Scripts/activate_this.py"
+        activate_this_file = activate_this_file.replace('\\', '/')
+    else:
+        activate_this_file = venv_dir + "/bin/activate_this.py"
+        
     activate_this_file = venv_dir + "/bin/activate_this.py"
     # The execfile API is for Python 2. We keep here just in case you are on an
     # obscure system without Python 3
