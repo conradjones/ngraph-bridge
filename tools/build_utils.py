@@ -68,6 +68,8 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
 
     os.chdir(src_location)
 
+    src_location = src_location.replace('\\', '/')
+    
     # mkdir build directory
     path = build_dir
     try:
