@@ -44,7 +44,7 @@ def is_venv():
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
 
-def command_executor(cmd, verbose=False, msg=None, stdout=None, stderr=None):
+def command_executor(cmd, verbose=True, msg=None, stdout=None, stderr=None):
     '''
     Executes the command.
     Example: 
