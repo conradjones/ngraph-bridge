@@ -369,7 +369,7 @@ def main():
     ]
     
     if sys.platform.startswith('win32'):
-        ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s" % venv_dir])
+        ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s/share/plaidml" % venv_dir])
 
     if arguments.use_ngraph_staticlibs:
         ngraph_cmake_flags.extend(["-DNGRAPH_STATIC_LIB_ENABLE=TRUE"])
