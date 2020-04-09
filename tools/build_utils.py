@@ -84,12 +84,15 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     cmake_cmd = ["cmake"]
     cmake_cmd.extend(cmake_flags)
     cmake_cmd.extend([src_location])
+    cmake_cmd.extend(["-DCMAKE_FIND_DEBUG_MODE=ON"])
     cmd = ' '.join(cmake_cmd)
     print(cmd)
-    abort()
+    
         
     command_executor(cmake_cmd, verbose=True)
-
+    
+    abort()
+    
     import psutil
     num_cores = str(psutil.cpu_count(logical=True))
     cmd = ["make", "-j" + num_cores]
