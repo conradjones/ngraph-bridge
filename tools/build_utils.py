@@ -449,14 +449,17 @@ def build_ngraph_tf(build_dir, artifacts_location, ngtf_src_loc, venv_dir,
 
     command_executor(cmake_cmd)
 
-    if 
-    import psutil
-    num_cores = str(psutil.cpu_count(logical=True))
-    make_cmd = ["make", "-j" + num_cores, "install"]
-    if verbose:
-        make_cmd.extend(['VERBOSE=1'])
+    if sys.platform.startswith('win32'):
+        cmd = ["msbuild", "ALL_BUILD.vcxproj"]
+        command_executor(cmd, verbose=True)
+    else:
+        import psutil
+        num_cores = str(psutil.cpu_count(logical=True))
+        make_cmd = ["make", "-j" + num_cores, "install"]
+        if verbose:
+            make_cmd.extend(['VERBOSE=1'])
 
-    command_executor(make_cmd)
+        command_executor(make_cmd)
 
     os.chdir(os.path.join("python", "dist"))
     ngtf_wheel_files = glob.glob("ngraph_tensorflow_bridge-*.whl")
