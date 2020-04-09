@@ -91,8 +91,6 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
         
     command_executor(cmake_cmd, verbose=True)
     
-    abort()
-    
     import psutil
     num_cores = str(psutil.cpu_count(logical=True))
     cmd = ["make", "-j" + num_cores]
