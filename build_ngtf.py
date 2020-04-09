@@ -232,8 +232,6 @@ def main():
     # Setup the virtual env
     setup_venv(venv_dir)
 
-    venv_location = os.path.abspath(venv_dir)
-
     target_arch = 'native'
     if (arguments.target_arch):
         target_arch = arguments.target_arch
@@ -371,6 +369,8 @@ def main():
     ]
     
     if sys.platform.startswith('win32'):
+        venv_location = os.path.abspath(venv_dir)
+        venv_location = venv_location.replace('\\', '/')
         ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s/share/plaidml" % venv_location])
 
     if arguments.use_ngraph_staticlibs:
