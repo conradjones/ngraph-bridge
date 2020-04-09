@@ -84,7 +84,10 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     cmake_cmd = ["cmake"]
     cmake_cmd.extend(cmake_flags)
     cmake_cmd.extend([src_location])
-
+    cmd = ' '.join(cmake_cmd)
+    print(cmd)
+    abort()
+        
     command_executor(cmake_cmd, verbose=True)
 
     import psutil
