@@ -367,6 +367,9 @@ def main():
         "-DNGRAPH_TARGET_ARCH=" + target_arch,
         "-DNGRAPH_TUNE_ARCH=" + target_arch, "-DNGRAPH_TBB_ENABLE=FALSE"
     ]
+    
+    if sys.platform.startswith('win32'):
+        ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s" % venv_dir])
 
     if arguments.use_ngraph_staticlibs:
         ngraph_cmake_flags.extend(["-DNGRAPH_STATIC_LIB_ENABLE=TRUE"])
