@@ -91,14 +91,21 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
         
     command_executor(cmake_cmd, verbose=True)
     
-    import psutil
-    num_cores = str(psutil.cpu_count(logical=True))
-    cmd = ["make", "-j" + num_cores]
-    if verbose:
-        cmd.extend(['VERBOSE=1'])
-    command_executor(cmd, verbose=True)
-    cmd = ["make", "install"]
-    command_executor(cmd, verbose=True)
+    
+    if sys.platform.startswith('win32'):
+        cmd = ["msbuild", "ALL_BUILD.vcxproj"]
+        command_executor(cmd, verbose=True)
+    else:
+        import psutil
+        num_cores = str(psutil.cpu_count(logical=True))
+        cmd = ["make", "-j" + num_cores]
+        if verbose:
+            cmd.extend(['VERBOSE=1'])
+        command_executor(cmd, verbose=True)
+        cmd = ["make", "install"]
+        command_executor(cmd, verbose=True)
+
+
 
     os.chdir(pwd)
 
@@ -442,6 +449,7 @@ def build_ngraph_tf(build_dir, artifacts_location, ngtf_src_loc, venv_dir,
 
     command_executor(cmake_cmd)
 
+    if 
     import psutil
     num_cores = str(psutil.cpu_count(logical=True))
     make_cmd = ["make", "-j" + num_cores, "install"]
