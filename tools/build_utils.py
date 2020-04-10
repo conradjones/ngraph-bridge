@@ -84,6 +84,9 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     cmake_cmd = ["cmake"]
     cmake_cmd.extend(cmake_flags)
     cmake_cmd.extend([src_location])
+    if sys.platform.startswith('win32'):
+        cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:/bin/cache-cl.cmd"])
+        cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:/bin/cache-cl.cmd"])
     cmake_cmd.extend(["-DCMAKE_FIND_DEBUG_MODE=ON"])
     cmd = ' '.join(cmake_cmd)
     print(cmd)
