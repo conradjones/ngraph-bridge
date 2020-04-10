@@ -93,7 +93,7 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     
     
     if sys.platform.startswith('win32'):
-        cmd = ["msbuild", "ALL_BUILD.vcxproj"]
+        cmd = ["cmake", "--build", "."]
         command_executor(cmd, verbose=True)
     else:
         import psutil
@@ -450,7 +450,7 @@ def build_ngraph_tf(build_dir, artifacts_location, ngtf_src_loc, venv_dir,
     command_executor(cmake_cmd)
 
     if sys.platform.startswith('win32'):
-        cmd = ["msbuild", "ALL_BUILD.vcxproj"]
+        cmd = ["cmake", "--build", "."]
         command_executor(cmd, verbose=True)
     else:
         import psutil
