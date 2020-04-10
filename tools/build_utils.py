@@ -85,8 +85,8 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     cmake_cmd.extend(cmake_flags)
     cmake_cmd.extend([src_location])
     if sys.platform.startswith('win32'):
-        cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:\\bin\\cache-cl.cmd"])
-        cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:\\bin\\cache-cl.cmd"])
+        cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:/bin/cache-cl.cmd"])
+        cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:/bin/cache-cl.cmd"])
         cmake_cmd.extend(['-G"Ninja"'])
     cmake_cmd.extend(["-DCMAKE_FIND_DEBUG_MODE=ON"])
     cmd = ' '.join(cmake_cmd)
@@ -450,8 +450,8 @@ def build_ngraph_tf(build_dir, artifacts_location, ngtf_src_loc, venv_dir,
     cmake_cmd.extend(cmake_flags)
     cmake_cmd.extend([ngtf_src_loc])
     if sys.platform.startswith('win32'):
-        cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:\\bin\\cache-cl.cmd"])
-        cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:\\bin\\cache-cl.cmd"])
+        cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:/bin/cache-cl.cmd"])
+        cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:/bin/cache-cl.cmd"])
         cmake_cmd.extend(['-G"Ninja"'])
     cmd = ' '.join(cmake_cmd)
 
