@@ -87,6 +87,7 @@ def build_ngraph(build_dir, src_location, cmake_flags, verbose):
     if sys.platform.startswith('win32'):
         cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:\\bin\\cache-cl.cmd"])
         cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:\\bin\\cache-cl.cmd"])
+        cmake_cmd.extend(['-G"MinGW Makefiles"'])
     cmake_cmd.extend(["-DCMAKE_FIND_DEBUG_MODE=ON"])
     cmd = ' '.join(cmake_cmd)
     print(cmd)
@@ -451,6 +452,7 @@ def build_ngraph_tf(build_dir, artifacts_location, ngtf_src_loc, venv_dir,
     if sys.platform.startswith('win32'):
         cmake_cmd.extend(["-DCMAKE_CXX_COMPILER=C:\\bin\\cache-cl.cmd"])
         cmake_cmd.extend(["-DCMAKE_CC_COMPILER=C:\\bin\\cache-cl.cmd"])
+        cmake_cmd.extend(['-G"MinGW Makefiles"'])
     cmd = ' '.join(cmake_cmd)
 
     command_executor(cmake_cmd)
