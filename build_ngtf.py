@@ -146,6 +146,15 @@ def main():
         default='')
 
     parser.add_argument(
+        '--use_plaidml_from_location',
+        help=
+        "Use PlaidML from a directory where it was already built and stored.\n"
+        "This location is expected to be populated by build_tf.py\n",
+        action="store",
+        default='')
+
+
+    parser.add_argument(
         '--use_ngraph_staticlibs',
         help="Builds and links ngraph statically\n",
         action="store_true")
@@ -368,10 +377,7 @@ def main():
         "-DNGRAPH_TUNE_ARCH=" + target_arch, "-DNGRAPH_TBB_ENABLE=FALSE"
     ]
     
-    if sys.platform.startswith('win32'):
-        venv_location = os.path.abspath(venv_dir)
-        venv_location = venv_location.replace('\\', '/')
-        ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s/share/plaidml" % venv_location])
+    ngraph_cmake_flags.extend(["-DCMAKE_PREFIX_PATH=%s" % arguments.use_plaidml_from_location])
 
     if arguments.use_ngraph_staticlibs:
         ngraph_cmake_flags.extend(["-DNGRAPH_STATIC_LIB_ENABLE=TRUE"])
@@ -391,6 +397,39 @@ def main():
 
     if arguments.build_plaidml_backend:
         command_executor(["pip", "install", "-U", "plaidML"])
+
+    if arguments.use_plaidml_from_location:
+        # Some asserts to make sure the directory structure of
+        # use_tensorflow_from_location is correct. The location
+        # should have: ./artifacts/tensorflow, which is expected
+        # to contain one TF whl file, framework.so and cc.so
+        print("Using PlaidML from " + arguments.use_plaidml_from_location)
+        # The tf whl should be in use_tensorflow_from_location/artifacts/tensorflow
+        tf_whl_loc = os.path.abspath(arguments.use_plaidml_from_location +
+                                     '/lib')
+        possible_whl = [i for i in os.listdir(tf_whl_loc) if '.whl' in i]
+        assert len(
+            possible_whl
+        ) == 1, "Expected one TF whl file, but found " + len(possible_whl)
+        # Make sure there is exactly 1 TF whl
+        plaidml_whl = os.path.abspath(tf_whl_loc + '/' + possible_whl[0])
+        assert os.path.isfile(plaidml_whl), "Did not find " + plaidml_whl
+        # Install the found TF whl file
+        command_executor(["pip", "install", "-U", plaidml_whl])
+        '''cxx_abi = get_tf_cxxabi()
+        cwd = os.getcwd()
+        os.chdir(tf_whl_loc)
+        tf_in_artifacts = os.path.join(
+            os.path.abspath(artifacts_location), "tensorflow")
+        if os.path.isdir(tf_in_artifacts):
+            print("TensorFlow already exists in artifacts. Using that")
+        else:
+            os.mkdir(tf_in_artifacts)
+            # This function copies the .so files from
+            # use_tensorflow_from_location/artifacts/tensorflow to
+            # artifacts/tensorflow
+            copy_tf_to_artifacts(tf_in_artifacts, tf_whl_loc)
+        os.chdir(cwd)'''
 
     flag_string_map = {True: 'YES', False: 'NO'}
     ngraph_cmake_flags.extend([
