@@ -395,7 +395,7 @@ def main():
     else:
         ngraph_cmake_flags.extend(["-DNGRAPH_DISTRIBUTED_ENABLE=OFF"])
 
-    if arguments.build_plaidml_backend:
+    if arguments.build_plaidml_backend and not arguments.use_plaidml_from_location:
         command_executor(["pip", "install", "-U", "plaidML"])
 
     if arguments.use_plaidml_from_location:
